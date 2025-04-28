@@ -1,10 +1,13 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useCompletion } from "ai/react";
 
 export default function Home() {
+  const [isUploading, setIsUploading] = useState(false);
+  const [errorDetails, setErrorDetails] = useState<string | null>(null);
+
   // When a file is dropped in the dropzone, call the `/api/addData` API to train our bot on a new PDF File
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
@@ -14,18 +17,49 @@ export default function Home() {
       return;
     }
 
+    setIsUploading(true);
+    setErrorDetails(null);
     const formData = new FormData();
     formData.set("file", file);
 
-    const response = await fetch("/api/addData", {
-      method: "POST",
-      body: formData,
-    });
+    try {
+      const response = await fetch("/api/addData", {
+        method: "POST",
+        body: formData,
+      });
 
-    const body = await response.json();
-
-    if (body.success) {
-      alert("Data added successfully");
+      // Get the raw text response regardless of content type
+      const responseText = await response.text();
+      let errorMessage = `Error: ${response.status} - ${response.statusText}`;
+      
+      try {
+        // Try to parse as JSON to get detailed error
+        const responseData = JSON.parse(responseText);
+        if (!response.ok) {
+          errorMessage += responseData.error ? `\nDetails: ${responseData.error}` : '';
+          setErrorDetails(responseData.error || 'Unknown server error');
+          throw new Error(errorMessage);
+        }
+        
+        // Success case
+        if (responseData.success) {
+          alert("Data added successfully");
+        } else {
+          setErrorDetails(responseData.error || 'Unknown error');
+          alert(responseData.error || "Unknown error occurred");
+        }
+      } catch (parseError) {
+        // If parsing fails, it's likely HTML error page
+        console.error("Failed to parse response:", parseError);
+        setErrorDetails(responseText);
+        throw new Error(`${errorMessage}\nRaw response: ${responseText.substring(0, 200)}`);
+      }
+      
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      alert("Failed to upload PDF: " + (error instanceof Error ? error.message : "Unknown error"));
+    } finally {
+      setIsUploading(false);
     }
   }, []);
 
@@ -49,13 +83,22 @@ export default function Home() {
         })}
       >
         <input {...getInputProps()} />
-        <p>Upload a PDF to add new data</p>
+        <p>{isUploading ? "Uploading PDF..." : "Upload a PDF to add new data"}</p>
       </div>
+
+      {errorDetails && (
+        <div className="mt-4 p-4 bg-red-900/30 border border-red-800 rounded-md w-full max-w-md">
+          <h3 className="text-red-500 font-bold">Error Details:</h3>
+          <pre className="text-xs overflow-auto max-h-40 whitespace-pre-wrap">
+            {errorDetails}
+          </pre>
+        </div>
+      )}
 
       <div className="mx-auto w-full items-center max-w-md py-24 flex flex-col stretch">
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
-            className=" w-full max-w-md text-black border border-gray-300 rounded shadow-xl p-2"
+            className="w-full max-w-md text-black border border-gray-300 rounded shadow-xl p-2"
             value={input}
             placeholder="Enter your prompt..."
             onChange={handleInputChange}
@@ -66,12 +109,14 @@ export default function Home() {
             type="submit"
             className="py-2 border rounded-lg bg-gray-900 text-sm px-6"
           >
-            Submit
+            {isLoading ? "Thinking..." : "Submit"}
           </button>
 
-          <p className="text-center">
-            Completion result: {completion === "" ? "Thinking..." : completion}
-          </p>
+          {completion && (
+            <div className="border border-gray-800 p-4 rounded-lg bg-gray-900">
+              <p>{completion}</p>
+            </div>
+          )}
         </form>
       </div>
     </main>
