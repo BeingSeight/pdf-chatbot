@@ -1,9 +1,9 @@
 # **PDF Chatbot – Chat with Any PDF using AI**
-# [Click Here to Try PDF Chatbot Live](https://pdf-chatbot-beingseight.vercel.app/)
+# [PDF ChatBot Free Access has been suffering with issues due to free API tokens check it later for the update]
 
 ---
 ## Overview:
-<img width="1408" alt="Screenshot of PDF Chatbot" src="https://github.com/user-attachments/assets/40d5b426-316a-48ca-bf48-e4c075856fd8" />
+<img width="1408" alt="Screenshot of PDF Chatbot" src="image.png" />
 
 
 ---
