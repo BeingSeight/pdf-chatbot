@@ -1,36 +1,122 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# **PDF Chatbot – Chat with Any PDF using AI**
+# [Click Here to Try PDF Chatbot Live](https://pdf-chatbot-beingseight.vercel.app/)
 
-## Getting Started
+---
+## Overview:
+<img width="1408" alt="Screenshot of PDF Chatbot" src="https://github.com/user-attachments/assets/40d5b426-316a-48ca-bf48-e4c075856fd8" />
 
-First, run the development server:
 
+---
+[GitHub Repository Link](https://github.com/BeingSeight/pdf-chatbot)
+
+## **Introduction**
+
+Welcome to **PDF Chatbot**! This interactive application lets you upload PDF documents and have conversations about their contents through AI. Built with Next.js, TypeScript, and Langchain, this application enables you to instantly query any PDF document without having to read through it manually. Simply upload your PDF, wait for processing, and start asking questions!
+
+---
+
+## **Features**
+
+- **PDF Intelligence**: Upload PDFs and ask questions about their content instantly.  
+- **Vector-Based Search**: Utilizes Pinecone vector database for semantic understanding of documents.  
+- **Conversational Memory**: Maintains context throughout your conversation for more coherent answers.  
+- **Modern Stack**: Built with Next.js App Router, TypeScript, and Tailwind CSS.  
+- **Easy PDF Uploads**: Simple drag-and-drop interface for adding documents.
+
+---
+
+## **How It Works**
+
+1. **Frontend**  
+   - Built using **Next.js**, **TypeScript**, and **Tailwind CSS**.  
+   - Features a drag-and-drop PDF uploader and interactive chat interface.  
+2. **API Routes**  
+   - `/api/addData`: Processes uploaded PDFs, extracts text, and stores embeddings in Pinecone.  
+   - `/api/chat`: Handles user questions, retrieves relevant document sections, and generates AI responses.  
+3. **Vector Storage**  
+   - Uses **Pinecone** to store document embeddings for semantic retrieval.  
+   - Creates vector representations of document chunks for accurate question answering.  
+4. **Deployment**  
+   - Hosted on **Vercel**, leveraging serverless functions for API endpoints.
+
+---
+
+## **Tech Stack**
+
+- **Next.js**: Framework for React apps with built-in API routes.  
+- **TypeScript**: Strongly-typed code for reliability and auto-completion.  
+- **Tailwind CSS**: Utility-first CSS for sleek, responsive design.  
+- **Langchain**: Framework for connecting AI models with external data sources.  
+- **Pinecone**: Vector database for semantic document search.  
+- **OpenAI**: GPT models for natural language understanding and generation.  
+- **Vercel**: Zero-config deployment and serverless functions.
+
+---
+
+## **How I Built It**
+
+1. **Project Setup**  
+   - Created Next.js application with TypeScript and Tailwind CSS support.  
+   - Configured environment variables for API keys and service connections.  
+2. **Vector Database Integration**  
+   - Set up Pinecone index with appropriate dimensions for OpenAI embeddings.  
+   - Implemented document processing pipeline for PDF text extraction and chunking.  
+3. **API Development**  
+   - Built `/api/addData` endpoint to handle PDF uploads and vector storage.  
+   - Created `/api/chat` endpoint with streaming response support for conversations.  
+4. **Frontend Interface**  
+   - Designed an intuitive upload area using react-dropzone.  
+   - Implemented chat interface with real-time AI responses using Vercel's AI SDK.  
+5. **Testing & Deployment**  
+   - Tested with various PDF documents to ensure accurate information retrieval.  
+   - Deployed to Vercel with proper environment configuration.
+
+---
+
+## **Why This Project Stands Out**
+
+PDF Chatbot demonstrates how to build an **intelligent document interface** that bridges the gap between unstructured PDF data and conversational AI. By leveraging vector embeddings and retrieval-augmented generation, it provides accurate, contextual answers without hallucinating information not present in the documents.
+
+---
+
+## **Installation & Setup**
+
+To run PDF Chatbot locally:
+
+1. **Clone** the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  git clone https://github.com/BeingSeight/pdf-chatbot.git
+  cd pdf-chatbot
 ```
+2. Install dependencies:
+```bash
+  npm install
+```
+3. Configure your environment variables:
+Create .env.local:
+``` env
+  PINECONE_API_KEY="your_pinecone_key_here"
+  PINECONE_INDEX_NAME="pdf-chatbot"
+  OPENAI_API_KEY="your_openai_key_here"
+```
+4. Start the development server:
+``` bash
+  npm run dev
+```
+5. Open http://localhost:3000 in your browser.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
+## Deployment
+1. Commit all changes (exclude .env.local) and push to GitHub.
+2. Add all required environment variables in your Vercel project settings.
+3. Deploy on Vercel to get a global, serverless PDF chatbot running in minutes.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
+## Acknowledgments
+OpenAI for their powerful language models and embeddings API.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Pinecone for their efficient vector database technology.
 
-## Learn More
+Langchain, Next.js, TypeScript, and Tailwind CSS for an excellent development experience.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Feel free to explore, fork, and contribute to this project!
