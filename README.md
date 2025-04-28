@@ -3,7 +3,7 @@
 
 ---
 ## Overview:
-<img width="1408" alt="Screenshot of PDF Chatbot" src="![alt text](image.png)" />
+<img width="1408" alt="Screenshot of PDF Chatbot" src="image.png" />
 
 
 ---
